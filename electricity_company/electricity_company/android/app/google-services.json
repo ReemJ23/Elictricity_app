@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "452390541566",
+    "project_id": "electricity-company-39d9e",
+    "storage_bucket": "electricity-company-39d9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452390541566:android:8d90bfb797a0a8ff90edaf",
+        "android_client_info": {
+          "package_name": "com.competition.electricity_company"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452390541566-5948co1584j33u25pu0nonae3saf19dv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9vofQGdWAEMU4idw5ufpVEVoR21yvlZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452390541566-5948co1584j33u25pu0nonae3saf19dv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452390541566:android:8f40158b82d28dbf90edaf",
+        "android_client_info": {
+          "package_name": "com.example.electricity_company"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452390541566-5948co1584j33u25pu0nonae3saf19dv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9vofQGdWAEMU4idw5ufpVEVoR21yvlZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452390541566-5948co1584j33u25pu0nonae3saf19dv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
