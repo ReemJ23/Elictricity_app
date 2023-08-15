@@ -22,6 +22,7 @@ class _OtpState extends State<Otp> {
     final isLoading =
         Provider.of<AuthProvider>(context, listen: true).isLoading;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: tdBlue,
         elevation: 0.0,
