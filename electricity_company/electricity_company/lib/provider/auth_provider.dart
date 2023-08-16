@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:electricity_company/models/user.dart';
 import 'package:electricity_company/screens/authenticate/otp.dart';
 import 'package:electricity_company/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +15,8 @@ class AuthProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? _uid;
   String get uid => _uid!;
+  UserModel? _userModel;
+  UserModel get userModel => _userModel!;
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -22,6 +27,13 @@ class AuthProvider extends ChangeNotifier {
   void checkSignIn() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
     _isSignedIn = s.getBool("is_signed") ?? false;
+    notifyListeners();
+  }
+
+  Future setSignIn() async {
+    final SharedPreferences s = await SharedPreferences.getInstance();
+    s.setBool("is_signed", true);
+    _isSignedIn = true;
     notifyListeners();
   }
 
@@ -89,5 +101,40 @@ class AuthProvider extends ChangeNotifier {
       print("New User");
       return false;
     }
+  }
+
+  void saveUserDataToFirebase(
+      {required BuildContext context,
+      required UserModel userModel,
+      required Function onSuccess}) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      userModel.createdAt = DateTime.now().millisecondsSinceEpoch.toString();
+      userModel.phoneNumber = _firebaseAuth.currentUser!.phoneNumber!;
+      userModel.uid = _firebaseAuth.currentUser!.uid;
+      _userModel = userModel;
+
+      //uploading to database
+      await _firebaseFirestore
+          .collection("users")
+          .doc(_uid)
+          .set(userModel.toMap())
+          .then((value) {
+        onSuccess();
+        _isLoading = false;
+        notifyListeners();
+      });
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //STORING DATA LOCALLY
+  Future saveUserDataToSP() async {
+    SharedPreferences s = await SharedPreferences.getInstance();
+    await s.setString("user_model", jsonEncode(userModel.toMap()));
   }
 }

@@ -33,7 +33,7 @@ class _OtpState extends State<Otp> {
       ),
       body: SafeArea(
         child: isLoading == true
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: tdBlue,
                 ),
