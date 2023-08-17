@@ -1,12 +1,62 @@
+import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/screens/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
-class Wrapper extends StatelessWidget {
+import 'home/profile.dart';
+import 'home/user_forms.dart';
+
+class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
 
   @override
+  State<Wrapper> createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
+  @override
+  int currentIndex = 0;
+  void goToPage(index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  List _pages = [
+    Home(),
+    UserForms(),
+    Profile(),
+  ];
   Widget build(BuildContext context) {
-    //return either home or authenticate widget based on user loged in or not
-    return Home();
+    return Scaffold(
+      body: _pages[currentIndex],
+      backgroundColor: tdGrey,
+      bottomNavigationBar: Container(
+        color: Color.fromARGB(99, 21, 79, 126),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: GNav(
+              onTabChange: (index) => goToPage(index),
+              color: Colors.white,
+              activeColor: Colors.white,
+              tabBackgroundColor: Color.fromARGB(163, 21, 79, 126),
+              tabBorderRadius: 50,
+              gap: 8,
+              padding: EdgeInsets.all(12),
+              textStyle: TextStyle(fontSize: 18, color: Colors.white),
+              tabs: [
+                GButton(icon: Icons.file_present_outlined, text: 'المعاملات'),
+                GButton(
+                  icon: Icons.file_copy_outlined,
+                  text: "معاملاتي",
+                ),
+                GButton(
+                  icon: Icons.person,
+                  text: "ملفي",
+                ),
+              ]),
+        ),
+      ),
+    );
   }
 }
