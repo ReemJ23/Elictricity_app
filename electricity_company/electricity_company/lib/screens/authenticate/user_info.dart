@@ -2,6 +2,7 @@ import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/models/user.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/screens/home/home.dart';
+import 'package:electricity_company/screens/wrapper.dart';
 import 'package:electricity_company/utils/utils.dart';
 import 'package:electricity_company/widgets/custome_button.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +171,7 @@ class _UserInfoState extends State<UserInfo> {
           ap.saveUserDataToSP().then((value) => ap.setSignIn().then((value) =>
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const Wrapper()),
                   (route) => false)));
         },
       );

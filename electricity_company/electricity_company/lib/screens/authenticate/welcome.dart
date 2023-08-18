@@ -2,6 +2,7 @@ import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/screens/authenticate/register.dart';
 import 'package:electricity_company/screens/home/home.dart';
+import 'package:electricity_company/screens/wrapper.dart';
 import 'package:electricity_company/widgets/custome_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,16 +52,24 @@ class _WelcomeState extends State<Welcome> {
                   width: double.infinity,
                   height: 60,
                   child: CustomeButton(
-                      onPressed: () {
-                        ap.isSignedIn ==
-                                true //when true, then fetch shared preference data
-                            ? Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => Home()))
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Register()),
+                      onPressed: () async {
+                        if (ap.isSignedIn == true) {
+                          await ap.getDataFromSP().whenComplete(
+                                () => Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Wrapper(),
+                                  ),
+                                ),
                               );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Register(),
+                            ),
+                          );
+                        }
                       },
                       text: "ابدأ"),
                 ),

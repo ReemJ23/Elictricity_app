@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Wrapper(),
+        home: Welcome(),
         title: "FlutterPhoneAuth",
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/screens/authenticate/user_info.dart';
+import 'package:electricity_company/screens/wrapper.dart';
 import 'package:electricity_company/utils/utils.dart';
 import 'package:electricity_company/widgets/custome_button.dart';
 import 'package:flutter/material.dart';
@@ -139,6 +140,18 @@ class _OtpState extends State<Otp> {
           (value) async {
             if (value == true) {
               //user exists in our app
+              ap.getDataFromFirestore().then(
+                    (value) => ap.saveUserDataToSP().then(
+                          (value) => ap.setSignIn().then(
+                                (value) => Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Wrapper(),
+                                    ),
+                                    (route) => false),
+                              ),
+                        ),
+                  );
             } else {
               //new user
               Navigator.pushAndRemoveUntil(
