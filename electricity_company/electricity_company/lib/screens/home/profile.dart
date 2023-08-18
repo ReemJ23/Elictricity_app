@@ -36,19 +36,23 @@ class _ProfileState extends State<Profile> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 20),
-            Container(
-              child: Text(
-                "الأسم",
-                style: TextStyle(fontSize: 20, color: tdBlue),
-              ),
-              height: 40,
-              color: Colors.white,
+            Text("الأسم"),
+            Row(
+              children: [
+                Text(
+                  ap.userModel.fname,
+                  style: TextStyle(fontSize: 20, color: tdBlue),
+                ),
+                Text(ap.userModel.sname),
+                Text(ap.userModel.tname),
+                Text(ap.userModel.lname),
+              ],
             ),
-            Text(ap.userModel.fname),
+            Text(ap.userModel.id),
+            Text(ap.userModel.phoneNumber),
           ],
         ),
       ),
