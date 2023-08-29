@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/models/user.dart';
 import 'package:electricity_company/screens/authenticate/otp.dart';
 import 'package:electricity_company/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +22,7 @@ class AuthProvider extends ChangeNotifier {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   AuthProvider() {
     checkSignIn();
   }
@@ -173,4 +176,11 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     s.clear();
   }
+
+  // Future<String> storeFileToStorage(String ref, File file) async {
+  //   UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
+  //   TaskSnapshot snapshot = await uploadTask;
+  //   String downloadUrl = await snapshot.ref.getDownloadURL();
+  //   return downloadUrl;
+  // }
 }

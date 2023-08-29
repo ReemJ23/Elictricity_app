@@ -1,3 +1,4 @@
+import 'package:electricity_company/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class UserForms extends StatefulWidget {
@@ -10,6 +11,16 @@ class UserForms extends StatefulWidget {
 class _UserFormsState extends State<UserForms> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: tdGrey,
+      appBar: AppBar(
+        backgroundColor: tdBlue,
+        elevation: 0.0,
+        title: Text("شركة الكهرباء الأردنية"),
+        centerTitle: true,
+        leading: Image.asset("images/logo.png", width: 40),
+        leadingWidth: 100,
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
+import 'package:electricity_company/screens/forms/1.dart';
 import 'package:electricity_company/screens/home/profile.dart';
 import 'package:electricity_company/screens/home/user_forms.dart';
 import 'package:electricity_company/widgets/transaction.dart';
@@ -31,28 +32,33 @@ class _HomeState extends State<Home> {
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          children: [
-            searchBox(),
-            Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 20),
-                    child: Text(
-                      'المعاملات',
-                      style: TextStyle(fontSize: 30),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              searchBox(),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 20, bottom: 20),
+                      child: Text(
+                        'المعاملات',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      alignment: Alignment.topRight,
                     ),
-                    alignment: Alignment.topRight,
-                  ),
-                  Transaction(),
-                  Transaction(),
-                ],
+                    Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
+                    Transaction(
+                        title: "طلب كتاب لهجة معينة عن حالة العداد",
+                        page: Form1()),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/screens/authenticate/welcome.dart';
-import 'package:electricity_company/screens/wrapper.dart';
+import 'package:electricity_company/screens/forms/1.dart';
+import 'package:electricity_company/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -2,10 +2,9 @@ import 'package:electricity_company/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class Transaction extends StatelessWidget {
-  const Transaction({super.key, required this.title, required this.page});
+  const Transaction({super.key, required this.title});
 
   final String title;
-  final StatefulWidget page;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,6 @@ class Transaction extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => page)),
       ),
     );
   }
