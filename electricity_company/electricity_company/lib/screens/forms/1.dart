@@ -10,7 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-
+import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Form1 extends StatefulWidget {
@@ -21,6 +21,7 @@ class Form1 extends StatefulWidget {
 }
 
 class _Form1State extends State<Form1> {
+  bool showLoader = false;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   ImagePicker imagePicker = ImagePicker();
   XFile? image1;
@@ -51,6 +52,13 @@ class _Form1State extends State<Form1> {
       FirebaseFirestore.instance.collection('transactions');
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(ap.uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    late Stream<QuerySnapshot> _streamTransactions =
+        _referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
@@ -186,6 +194,7 @@ class _Form1State extends State<Form1> {
                           //store the image URL inside the corresponding document of database
 
                           Map<String, String> form1 = {
+                            'اسم المعاملة': 'فصل/ وصل تيار 3 فاز',
                             'صورة عن الهوية': image1Url,
                             'فاتورة سابقة': image1Ur2,
                             'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
@@ -193,6 +202,14 @@ class _Form1State extends State<Form1> {
                           };
                           //add new item
                           _reference.add(form1);
+                          //add transaction to user transactions
+                          Map<String, String> user_trans = {
+                            'أسم المعاملة': 'فصل/ وصل تيار 3 فاز',
+                            'التاريخ': DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                          };
+                          _referenceTransactions.add(user_trans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");

@@ -34,28 +34,45 @@ class _ProfileState extends State<Profile> {
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            SizedBox(height: 20),
-            Text("الأسم"),
-            Row(
-              children: [
-                Text(
-                  ap.userModel.fname,
-                  style: TextStyle(fontSize: 20, color: tdBlue),
-                ),
-                Text(ap.userModel.sname),
-                Text(ap.userModel.tname),
-                Text(ap.userModel.lname),
-              ],
-            ),
-            Text(ap.userModel.id),
-            Text(ap.userModel.phoneNumber),
+            _buildTextWithLabel(
+                "${ap.userModel.fname} ${ap.userModel.sname} ${ap.userModel.tname} ${ap.userModel.lname}",
+                ":الأسم"),
+            _buildTextWithLabel(ap.userModel.id, ":الرقم الوطني"),
+            _buildTextWithLabel(ap.userModel.phoneNumber, ":رقم الهاتف"),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTextWithLabel(String text, String label) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const SizedBox(width: 10),
+            Text(
+              text,
+              style: const TextStyle(fontSize: 19, color: tdBlue),
+              textAlign: TextAlign.right,
+            ),
+            Text(
+              label,
+              style: const TextStyle(
+                  fontSize: 25, fontWeight: FontWeight.bold, color: tdBlue),
+              textAlign: TextAlign.right,
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

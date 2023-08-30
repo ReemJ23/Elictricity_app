@@ -176,11 +176,4 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     s.clear();
   }
-
-  // Future<String> storeFileToStorage(String ref, File file) async {
-  //   UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
-  //   TaskSnapshot snapshot = await uploadTask;
-  //   String downloadUrl = await snapshot.ref.getDownloadURL();
-  //   return downloadUrl;
-  // }
 }
