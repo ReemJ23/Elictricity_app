@@ -205,6 +205,10 @@ class _Form1State extends State<Form1> {
                           //add transaction to user transactions
                           Map<String, String> user_trans = {
                             'أسم المعاملة': 'فصل/ وصل تيار 3 فاز',
+                            'صورة عن الهوية': image1Url,
+                            'فاتورة سابقة': image1Ur2,
+                            'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
+                                image1Ur3,
                             'التاريخ': DateTime.now()
                                 .millisecondsSinceEpoch
                                 .toString(),

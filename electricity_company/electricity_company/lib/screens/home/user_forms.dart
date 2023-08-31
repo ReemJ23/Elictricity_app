@@ -65,6 +65,16 @@ class _UserFormsState extends State<UserForms> {
                             itemCount: items.length,
                             itemBuilder: (context, index) {
                               Map thisItem = items[index];
+                              var ts = int.parse(thisItem['التاريخ']);
+                              var dt = DateTime.fromMillisecondsSinceEpoch(ts);
+                              var y = dt.year;
+                              var m = dt.month;
+                              var d = dt.day;
+                              String dateString = d.toString() +
+                                  '/' +
+                                  m.toString() +
+                                  '/' +
+                                  y.toString();
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListTile(
@@ -75,6 +85,7 @@ class _UserFormsState extends State<UserForms> {
                                     thisItem['أسم المعاملة'].toString(),
                                     textAlign: TextAlign.right,
                                   ),
+                                  leading: Text(dateString),
                                 ),
                               );
                             });
