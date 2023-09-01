@@ -1,6 +1,9 @@
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/screens/forms/1.dart';
+import 'package:electricity_company/screens/forms/2.dart';
+import 'package:electricity_company/screens/forms/3.dart';
+import 'package:electricity_company/screens/forms/4.dart';
 import 'package:electricity_company/screens/home/profile.dart';
 import 'package:electricity_company/screens/home/user_forms.dart';
 import 'package:electricity_company/widgets/transaction.dart';
@@ -51,9 +54,17 @@ class _HomeState extends State<Home> {
                       alignment: Alignment.topRight,
                     ),
                     Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
+                    Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
+                    Transaction(title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
                     Transaction(
                         title: "طلب كتاب لهجة معينة عن حالة العداد",
-                        page: Form1()),
+                        page: Form4()),
+                    // Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
+                    // Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
+                    // Transaction(title: " تغير إشتراك مشغول عداد 1 فاز منزلي", page: Form1()),
+                    // Transaction(title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )",page: Form1()),
+                    // Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form1()),
+                    // Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),                      
                   ],
                 ),
               ),
