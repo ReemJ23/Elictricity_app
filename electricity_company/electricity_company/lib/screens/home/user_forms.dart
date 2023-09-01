@@ -1,10 +1,10 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/form1.dart';
 
 class UserForms extends StatefulWidget {
   const UserForms({super.key});
@@ -59,6 +59,10 @@ class _UserFormsState extends State<UserForms> {
                                   'id': e.id,
                                   'أسم المعاملة': e['أسم المعاملة'],
                                   'التاريخ': e['التاريخ'],
+                                  'صورة عن الهوية': e['صورة عن الهوية'],
+                                  'فاتورة سابقة': e['فاتورة سابقة'],
+                                  'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
+                                      e['شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك'],
                                 })
                             .toList();
                         return ListView.builder(
@@ -86,6 +90,25 @@ class _UserFormsState extends State<UserForms> {
                                     textAlign: TextAlign.right,
                                   ),
                                   leading: Text(dateString),
+                                  onTap: () {
+                                    if (thisItem['أسم المعاملة'].toString() ==
+                                        'فصل/ وصل تيار 3 فاز') {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => UserTrans1(
+                                            img1: thisItem['صورة عن الهوية']
+                                                .toString(),
+                                            img2: thisItem['فاتورة سابقة']
+                                                .toString(),
+                                            img3: thisItem[
+                                                    'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك']
+                                                .toString(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               );
                             });
