@@ -35,6 +35,13 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: CustomeSearch());
+              }),
+        ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -85,5 +92,73 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+}
+
+class CustomeSearch extends SearchDelegate {
+  List<Transaction> allData = [
+    Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
+    Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
+    Transaction(title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
+    Transaction(title: "طلب كتاب لهجة معينة عن حالة العداد", page: Form4()),
+    Transaction(title: " إنهاء عقد 1 فاز", page: Form5()),
+    Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
+    Transaction(title: " تغير إشتراك مشغول عداد 1 فاز منزلي", page: Form1()),
+    Transaction(
+        title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )", page: Form1()),
+    Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
+    Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
+  ];
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<Transaction> matchQuery = [];
+    for (var item in allData) {
+      if (item.title.contains(query)) {
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          var result = matchQuery[index];
+          return result;
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<Transaction> matchQuery = [];
+    for (var item in allData) {
+      if (item.title.contains(query)) {
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          var result = matchQuery[index];
+          return result;
+        });
   }
 }
