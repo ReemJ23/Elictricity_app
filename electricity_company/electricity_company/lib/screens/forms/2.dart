@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/constants/colors.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class Form2 extends StatefulWidget {
   const Form2({super.key});
@@ -49,6 +52,13 @@ class _Form2State extends State<Form2> {
       FirebaseFirestore.instance.collection('transactions');
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(ap.uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    late Stream<QuerySnapshot> _streamTransactions =
+        _referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
@@ -183,14 +193,25 @@ class _Form2State extends State<Form2> {
 
                           //store the image URL inside the corresponding document of database
 
-                          Map<String, String> form1 = {
+                          Map<String, String> form2 = {
                             'صورة عن الهوية': image1Url,
                             'فاتورة سابقة': image1Ur2,
                             'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
                                 image1Ur3,
                           };
                           //add new item
-                          _reference.add(form1);
+                          _reference.add(form2);
+                          Map<String, String> user_trans = {
+                            'أسم المعاملة': 'فصل/ وصل تيار 1 فاز',
+                            'صورة عن الهوية': image1Url,
+                            'فاتورة سابقة': image1Ur2,
+                            'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
+                                image1Ur3,
+                            'التاريخ': DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                          };
+                          _referenceTransactions.add(user_trans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");

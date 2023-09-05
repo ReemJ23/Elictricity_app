@@ -4,6 +4,7 @@ import 'package:electricity_company/screens/forms/1.dart';
 import 'package:electricity_company/screens/forms/2.dart';
 import 'package:electricity_company/screens/forms/3.dart';
 import 'package:electricity_company/screens/forms/4.dart';
+import 'package:electricity_company/screens/forms/5.dart';
 import 'package:electricity_company/screens/home/profile.dart';
 import 'package:electricity_company/screens/home/user_forms.dart';
 import 'package:electricity_company/widgets/transaction.dart';
@@ -36,12 +37,12 @@ class _HomeState extends State<Home> {
         leadingWidth: 100,
       ),
       body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              searchBox(),
               Expanded(
                 child: ListView(
                   children: [
@@ -55,16 +56,27 @@ class _HomeState extends State<Home> {
                     ),
                     Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
                     Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
-                    Transaction(title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
+                    Transaction(
+                        title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
                     Transaction(
                         title: "طلب كتاب لهجة معينة عن حالة العداد",
                         page: Form4()),
-                    // Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
-                    // Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
-                    // Transaction(title: " تغير إشتراك مشغول عداد 1 فاز منزلي", page: Form1()),
-                    // Transaction(title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )",page: Form1()),
-                    // Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form1()),
-                    // Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),                      
+                    Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
+                    Transaction(
+                        title: "  تغير إشتراك مشغول عداد 1 فاز تجاري",
+                        page: Form1()),
+                    Transaction(
+                        title: " تغير إشتراك مشغول عداد 1 فاز منزلي",
+                        page: Form1()),
+                    Transaction(
+                        title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )",
+                        page: Form1()),
+                    Transaction(
+                        title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
+                    Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
+                    const SizedBox(
+                      height: 20,
+                    )
                   ],
                 ),
               ),
@@ -74,27 +86,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-}
-
-Widget searchBox() {
-  return Container(
-    margin: EdgeInsets.only(
-      top: 20,
-    ),
-    padding: EdgeInsets.symmetric(horizontal: 15),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: const TextField(
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(0),
-        prefixIcon: Icon(Icons.search, color: tdBlack, size: 20),
-        prefixIconConstraints: BoxConstraints(maxHeight: 20, maxWidth: 25),
-        border: InputBorder.none,
-        hintText: 'ابحث',
-        hintStyle: TextStyle(color: tdBlack),
-      ),
-    ),
-  );
 }

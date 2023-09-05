@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class Form4 extends StatefulWidget {
   const Form4({super.key});
 
   @override
   State<Form4> createState() => _Form4State();
-
 }
 
 class _Form4State extends State<Form4> {
@@ -27,7 +27,7 @@ class _Form4State extends State<Form4> {
   XFile? image3;
   XFile? image4;
 
-TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   String textLabel = ''; // Add this variable to hold the text field label
   //for selecting image
   void selectImage1() async {
@@ -44,8 +44,9 @@ TextEditingController _controller = TextEditingController();
     image3 = await imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {});
   }
-   void selectImage4() async {
-    image3 = await imagePicker.pickImage(source: ImageSource.gallery);
+
+  void selectImage4() async {
+    image4 = await imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {});
   }
 
@@ -59,6 +60,13 @@ TextEditingController _controller = TextEditingController();
       FirebaseFirestore.instance.collection('transactions');
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(ap.uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    late Stream<QuerySnapshot> _streamTransactions =
+        _referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
@@ -107,18 +115,18 @@ TextEditingController _controller = TextEditingController();
                 ),
                 label("رقم العداد او فاتورة سابقة"), // Use label here
 
-            TextField(
-              controller: _controller,
-              onChanged: (value) {
-                setState(() {
-                  textLabel = value; // Update textLabel with user's input
-                });
-              },
-              decoration: InputDecoration(
-                labelText: '', // Remove the labelText from here
-                // Add any additional decoration options
-              ),
-            ),
+                TextField(
+                  controller: _controller,
+                  onChanged: (value) {
+                    setState(() {
+                      textLabel = value; // Update textLabel with user's input
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: '', // Remove the labelText from here
+                    // Add any additional decoration options
+                  ),
+                ),
 
                 const SizedBox(height: 30),
                 label("تفويض من المشترك مصدق عليه من البنك"),
@@ -137,22 +145,6 @@ TextEditingController _controller = TextEditingController();
                         ),
                 ),
                 const SizedBox(height: 30),
-                label("كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب"),
-                const SizedBox(height: 10),
-                InkWell(
-                  onTap: () => selectImage3(),
-                  child: image3 == null
-                      ? CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 50,
-                          child: Icon(Icons.upload, size: 40),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: FileImage(File(image3!.path)),
-                          radius: 50,
-                        ),
-                ),
-                 const SizedBox(height: 30),
                 label("براءة ذمه"),
                 const SizedBox(height: 10),
                 InkWell(
@@ -168,6 +160,24 @@ TextEditingController _controller = TextEditingController();
                           radius: 50,
                         ),
                 ),
+                const SizedBox(height: 30),
+                label(
+                    "كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب"),
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () => selectImage3(),
+                  child: image3 == null
+                      ? CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 50,
+                          child: Icon(Icons.upload, size: 40),
+                        )
+                      : CircleAvatar(
+                          backgroundImage: FileImage(File(image3!.path)),
+                          radius: 50,
+                        ),
+                ),
+
                 const SizedBox(height: 10),
                 const SizedBox(height: 30),
                 Text(
@@ -188,16 +198,17 @@ TextEditingController _controller = TextEditingController();
                         if (image1 != null &&
                             image2 != null &&
                             image3 != null &&
-                            image4 != null) {
+                            image4 != null &&
+                            _controller.text.isNotEmpty) {
                           String uniqueFileName1 =
                               DateTime.now().microsecondsSinceEpoch.toString();
                           String uniqueFileName2 =
                               DateTime.now().microsecondsSinceEpoch.toString();
+                          String textFieldValue = _controller.text;
                           String uniqueFileName3 =
                               DateTime.now().microsecondsSinceEpoch.toString();
                           String uniqueFileName4 =
                               DateTime.now().microsecondsSinceEpoch.toString();
-                          String textFieldValue = _controller.text;
                           //upload image to firebase storage
                           Reference referenceRoot =
                               FirebaseStorage.instance.ref();
@@ -234,15 +245,30 @@ TextEditingController _controller = TextEditingController();
 
                           //store the image URL inside the corresponding document of database
 
-                          Map<String, dynamic> form1 = {
-      'صورة عن هوية المشترك او المفوض عنه': image1Url,
-      'تفويض من المشترك مصدق عليه من البنك': image1Ur2,
-            'رقم العداد او فاتورة سابقة': textFieldValue, 
-      'كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب': image1Ur3,
-      'براءة ذمه': image1Ur4,
-    };
+                          Map<String, dynamic> form4 = {
+                            'صورة عن هوية المشترك او المفوض عنه': image1Url,
+                            'تفويض من المشترك مصدق عليه من البنك': image1Ur2,
+                            'رقم العداد او فاتورة سابقة': textFieldValue,
+                            'كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب':
+                                image1Ur3,
+                            'براءة ذمه': image1Ur4,
+                          };
                           //add new item
-                          _reference.add(form1);
+                          _reference.add(form4);
+                          Map<String, String> user_trans = {
+                            'أسم المعاملة':
+                                'طلب كتاب لهجة معينة عن حالة العداد',
+                            'صورة عن هوية المشترك او المفوض عنه': image1Url,
+                            'تفويض من المشترك مصدق عليه من البنك': image1Ur2,
+                            'رقم العداد او فاتورة سابقة': textFieldValue,
+                            'كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب':
+                                image1Ur3,
+                            'براءة ذمه': image1Ur4,
+                            'التاريخ': DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                          };
+                          _referenceTransactions.add(user_trans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");

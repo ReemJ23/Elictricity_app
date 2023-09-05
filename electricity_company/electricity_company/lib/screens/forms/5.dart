@@ -10,23 +10,23 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
-class Form3 extends StatefulWidget {
-  const Form3({super.key});
+class Form5 extends StatefulWidget {
+  const Form5({super.key});
 
   @override
-  State<Form3> createState() => _Form3State();
+  State<Form5> createState() => _Form5State();
 }
 
-class _Form3State extends State<Form3> {
+class _Form5State extends State<Form5> {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   ImagePicker imagePicker = ImagePicker();
   XFile? image1;
   XFile? image2;
   XFile? image3;
-  XFile? image4;
 
+  TextEditingController _controller = TextEditingController();
+  String textLabel = ''; // Add this variable to hold the text field label
   //for selecting image
   void selectImage1() async {
     image1 = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -43,35 +43,21 @@ class _Form3State extends State<Form3> {
     setState(() {});
   }
 
-  void selectImage4() async {
-    image4 = await imagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {});
-  }
-
   String image1Url = '';
   String image1Ur2 = '';
   String image1Ur3 = '';
-  String image1Ur4 = '';
 
   GlobalKey<FormState> key = GlobalKey();
   CollectionReference _reference =
       FirebaseFirestore.instance.collection('transactions');
-
   @override
   Widget build(BuildContext context) {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
-    late DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('users').doc(ap.uid);
-    late CollectionReference _referenceTransactions =
-        _documentReference.collection('transactions');
-    late Stream<QuerySnapshot> _streamTransactions =
-        _referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
           backgroundColor: tdBlue,
           elevation: 0.0,
-          title: Text("طلب فحص عداد 1 فاز / 3 فاز"),
+          title: Text("  تغيري تعرفة عداد 1 فاز / 3 فاز"),
           centerTitle: true,
           leading: IconButton(
             icon: Icon(CupertinoIcons.arrow_left),
@@ -97,7 +83,7 @@ class _Form3State extends State<Form3> {
                   style: TextStyle(fontSize: 30, color: tdBlue),
                 ),
                 const SizedBox(height: 30),
-                label("صورة عن الهوية"),
+                label("شهادة سجل تجاري( شهادة الصناعة والتجارة)"),
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () => selectImage1(),
@@ -112,8 +98,24 @@ class _Form3State extends State<Form3> {
                           radius: 50,
                         ),
                 ),
+                label("رقم العداد او فاتورة سابقة"), // Use label here
+
+                TextField(
+                  controller: _controller,
+                  onChanged: (value) {
+                    setState(() {
+                      textLabel = value; // Update textLabel with user's input
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: '', // Remove the labelText from here
+                    // Add any additional decoration options
+                  ),
+                ),
+
                 const SizedBox(height: 30),
-                label("فاتورة سابقة"),
+                label(
+                    "رخصة مهن سارية المفعول مطابقة لاسم المشترك ومطابقة للنشاط"),
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () => selectImage2(),
@@ -129,7 +131,7 @@ class _Form3State extends State<Form3> {
                         ),
                 ),
                 const SizedBox(height: 30),
-                label("شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك"),
+                label("صورة عن هوية المشترك"),
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () => selectImage3(),
@@ -144,24 +146,17 @@ class _Form3State extends State<Form3> {
                           radius: 50,
                         ),
                 ),
-                const SizedBox(height: 30),
-                label("تسديد الرسوم المطلوبة والذمم"),
                 const SizedBox(height: 10),
-                InkWell(
-                  onTap: () => selectImage4(),
-                  child: image4 == null
-                      ? CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 50,
-                          child: Icon(Icons.upload, size: 40),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: FileImage(File(image4!.path)),
-                          radius: 50,
-                        ),
+                const SizedBox(height: 30),
+                Text(
+                  "بعد تسليم الوثائق المطلوبة يتم عملية كشف فني على العداد وتحويله الى دائرة الفحص أو التفتيش",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.right,
                 ),
-                const SizedBox(height: 10),
-                const SizedBox(height: 30),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
@@ -171,15 +166,14 @@ class _Form3State extends State<Form3> {
                         if (image1 != null &&
                             image2 != null &&
                             image3 != null &&
-                            image4 != null) {
+                            _controller.text.isNotEmpty) {
                           String uniqueFileName1 =
                               DateTime.now().microsecondsSinceEpoch.toString();
                           String uniqueFileName2 =
                               DateTime.now().microsecondsSinceEpoch.toString();
                           String uniqueFileName3 =
                               DateTime.now().microsecondsSinceEpoch.toString();
-                          String uniqueFileName4 =
-                              DateTime.now().microsecondsSinceEpoch.toString();
+                          String textFieldValue = _controller.text;
                           //upload image to firebase storage
                           Reference referenceRoot =
                               FirebaseStorage.instance.ref();
@@ -191,8 +185,6 @@ class _Form3State extends State<Form3> {
                               referenceDirImages.child(uniqueFileName2);
                           Reference referenceImageToUpload3 =
                               referenceDirImages.child(uniqueFileName3);
-                          Reference referenceImageToUpload4 =
-                              referenceDirImages.child(uniqueFileName4);
                           //store the files
                           try {
                             await referenceImageToUpload1
@@ -201,8 +193,6 @@ class _Form3State extends State<Form3> {
                                 .putFile(File(image2!.path));
                             await referenceImageToUpload3
                                 .putFile(File(image3!.path));
-                            await referenceImageToUpload4
-                                .putFile(File(image4!.path));
                             //get url of uploaded image
                             image1Url =
                                 await referenceImageToUpload1.getDownloadURL();
@@ -210,34 +200,20 @@ class _Form3State extends State<Form3> {
                                 await referenceImageToUpload2.getDownloadURL();
                             image1Ur3 =
                                 await referenceImageToUpload3.getDownloadURL();
-                            image1Ur4 =
-                                await referenceImageToUpload4.getDownloadURL();
                           } catch (e) {}
 
                           //store the image URL inside the corresponding document of database
 
-                          Map<String, String> form3 = {
-                            'اسم المعاملة': 'طلب فحص عداد 1 فاز / 3 فاز',
-                            'صورة عن الهوية': image1Url,
-                            'فاتورة سابقة': image1Ur2,
-                            'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
-                                image1Ur3,
-                            'تسديد الرسوم المطلوبة والذمم': image1Ur4,
+                          Map<String, dynamic> form5 = {
+                            'شهادة سجل تجاري( شهادة الصناعة والتجارة)':
+                                image1Url,
+                            'رخصة مهن سارية المفعول مطابقة لاسم المشترك ومطابقة للنشاط':
+                                image1Ur2,
+                            'رقم العداد او فاتورة سابقة': textFieldValue,
+                            'صورة عن هوية المشترك': image1Ur3,
                           };
                           //add new item
-                          _reference.add(form3);
-                          Map<String, String> user_trans = {
-                            'أسم المعاملة': 'طلب فحص عداد 1 فاز / 3 فاز',
-                            'التاريخ': DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
-                            'صورة عن الهوية': image1Url,
-                            'فاتورة سابقة': image1Ur2,
-                            'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
-                                image1Ur3,
-                            'تسديد الرسوم المطلوبة والذمم': image1Ur4,
-                          };
-                          _referenceTransactions.add(user_trans);
+                          _reference.add(form5);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");
