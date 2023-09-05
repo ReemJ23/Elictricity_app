@@ -1,5 +1,6 @@
 import 'package:electricity_company/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class UserTrans1 extends StatelessWidget {
   final String img1;
@@ -62,6 +63,7 @@ class UserTrans1 extends StatelessWidget {
                     radius: 100,
                   ),
                 ),
+                const SizedBox(height: 20),
                 Text(
                   "سيتم ارسال الطلب لدائرة الفحص والتفتيش وبعد التأكد من سلامته يتم الموافقة على فصل المشترك إذا كان لعداد سليم او ايصاله",
                   style: TextStyle(
@@ -72,6 +74,24 @@ class UserTrans1 extends StatelessWidget {
                   textAlign: TextAlign.right,
                 ),
                 const SizedBox(height: 30),
+                label("جاري النظر في المعاملة"),
+                const SizedBox(height: 10),
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: LinearPercentIndicator(
+                      lineHeight: 8,
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      percent: 30 / 100,
+                      animation: true,
+                      animationDuration: 1500,
+                      leading: Text(
+                        "30%",
+                        style: TextStyle(fontSize: 20, color: tdBlue),
+                      ),
+                      progressColor: tdBlue,
+                      backgroundColor: Colors.white,
+                    )),
+                const SizedBox(height: 20),
               ],
             ),
           ),

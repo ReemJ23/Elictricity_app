@@ -46,6 +46,7 @@ dependencies:
   pinput: ^2.2.21
   google_nav_bar: ^5.0.6
   image_picker: ^1.0.2
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
