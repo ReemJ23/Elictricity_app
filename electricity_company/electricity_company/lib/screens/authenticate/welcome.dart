@@ -43,7 +43,7 @@ class _WelcomeState extends State<Welcome> {
                 ),
                 const Text(
                   "تطبيق معاملات شركة الكهرباء الأردنية يرحب بكم",
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
                   height: 70,

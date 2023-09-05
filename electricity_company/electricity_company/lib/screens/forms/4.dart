@@ -114,17 +114,28 @@ class _Form4State extends State<Form4> {
                         ),
                 ),
                 label("رقم العداد او فاتورة سابقة"), // Use label here
-
-                TextField(
-                  controller: _controller,
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
                   onChanged: (value) {
                     setState(() {
                       textLabel = value; // Update textLabel with user's input
                     });
                   },
+                  cursorColor: tdBlue,
+                  style: const TextStyle(fontSize: 18),
+                  controller: _controller,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: '', // Remove the labelText from here
-                    // Add any additional decoration options
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(color: tdBlue)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(color: tdBlue)),
                   ),
                 ),
 

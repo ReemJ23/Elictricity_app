@@ -68,18 +68,18 @@ class _HomeState extends State<Home> {
                     Transaction(
                         title: "طلب كتاب لهجة معينة عن حالة العداد",
                         page: Form4()),
-                    Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
                     Transaction(
-                        title: "  تغير إشتراك مشغول عداد 1 فاز تجاري",
-                        page: Form1()),
+                        title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
+                    Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
                     Transaction(
                         title: " تغير إشتراك مشغول عداد 1 فاز منزلي",
                         page: Form1()),
                     Transaction(
-                        title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )",
+                        title: "  تغير إشتراك مشغول عداد 1 فاز تجاري",
                         page: Form1()),
                     Transaction(
-                        title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
+                        title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )",
+                        page: Form1()),
                     Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
                     const SizedBox(
                       height: 20,
@@ -101,12 +101,12 @@ class CustomeSearch extends SearchDelegate {
     Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
     Transaction(title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
     Transaction(title: "طلب كتاب لهجة معينة عن حالة العداد", page: Form4()),
-    Transaction(title: " إنهاء عقد 1 فاز", page: Form5()),
-    Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
+    Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
+    Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
     Transaction(title: " تغير إشتراك مشغول عداد 1 فاز منزلي", page: Form1()),
+    Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
     Transaction(
         title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )", page: Form1()),
-    Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
     Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
   ];
   @override
