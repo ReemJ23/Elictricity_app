@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/constants/colors.dart';
+import 'package:electricity_company/models/form2.dart';
+import 'package:electricity_company/models/form3.dart';
+import 'package:electricity_company/models/form4.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +57,7 @@ class _UserFormsState extends State<UserForms> {
                       if (snapshot.hasData) {
                         QuerySnapshot data = snapshot.data;
                         List<QueryDocumentSnapshot> documents = data.docs;
-                        List<Map> items = documents
+                        List<Map> name = documents
                             .map((e) => {
                                   'id': e.id,
                                   'أسم المعاملة': e['أسم المعاملة'],
@@ -66,9 +69,9 @@ class _UserFormsState extends State<UserForms> {
                                 })
                             .toList();
                         return ListView.builder(
-                            itemCount: items.length,
+                            itemCount: name.length,
                             itemBuilder: (context, index) {
-                              Map thisItem = items[index];
+                              Map thisItem = name[index];
                               var ts = int.parse(thisItem['التاريخ']);
                               var dt = DateTime.fromMillisecondsSinceEpoch(ts);
                               var y = dt.year;
@@ -82,17 +85,16 @@ class _UserFormsState extends State<UserForms> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40)),
-                                  tileColor: Colors.white,
-                                  title: Text(
-                                    thisItem['أسم المعاملة'].toString(),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  leading: Text(dateString),
-                                  onTap: () {
-                                    if (thisItem['أسم المعاملة'].toString() ==
-                                        'فصل/ وصل تيار 3 فاز') {
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(40)),
+                                    tileColor: Colors.white,
+                                    title: Text(
+                                      thisItem['أسم المعاملة'].toString(),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                    leading: Text(dateString),
+                                    onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -107,9 +109,7 @@ class _UserFormsState extends State<UserForms> {
                                           ),
                                         ),
                                       );
-                                    }
-                                  },
-                                ),
+                                    }),
                               );
                             });
                       }

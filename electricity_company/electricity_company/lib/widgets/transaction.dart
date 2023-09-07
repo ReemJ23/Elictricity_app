@@ -10,10 +10,12 @@ class Transaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.only(top: 5, bottom: 5, right: 5, left: 5),
       child: ListTile(
         tileColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: Color.fromARGB(192, 66, 95, 119))),
         title: Text(
           title,
           textAlign: TextAlign.right,

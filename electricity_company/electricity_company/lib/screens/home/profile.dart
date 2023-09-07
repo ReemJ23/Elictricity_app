@@ -24,6 +24,7 @@ class _ProfileState extends State<Profile> {
         actions: [
           IconButton(
             icon: const Icon(Icons.exit_to_app),
+            iconSize: 30,
             onPressed: () {
               ap.userSignOut().then((value) => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const Welcome())));
@@ -39,11 +40,20 @@ class _ProfileState extends State<Profile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            const SizedBox(height: 20),
+            Text(
+              "المعلومات الشخصية",
+              style: TextStyle(
+                  color: tdBlue, fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
             _buildTextWithLabel(
                 "${ap.userModel.fname} ${ap.userModel.sname} ${ap.userModel.tname} ${ap.userModel.lname}",
-                ":الأسم"),
-            _buildTextWithLabel(ap.userModel.id, ":الرقم الوطني"),
-            _buildTextWithLabel(ap.userModel.phoneNumber, ":رقم الهاتف"),
+                " :الأسم"),
+            const SizedBox(height: 20),
+            _buildTextWithLabel(ap.userModel.id, " :الرقم الوطني"),
+            const SizedBox(height: 20),
+            _buildTextWithLabel(ap.userModel.phoneNumber, " :رقم الهاتف"),
           ],
         ),
       ),
@@ -60,7 +70,7 @@ class _ProfileState extends State<Profile> {
             const SizedBox(width: 10),
             Text(
               text,
-              style: const TextStyle(fontSize: 19, color: tdBlue),
+              style: const TextStyle(fontSize: 20, color: tdBlue),
               textAlign: TextAlign.right,
             ),
             Text(

@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               icon: const Icon(Icons.search),
+              iconSize: 35,
               onPressed: () {
                 showSearch(context: context, delegate: CustomeSearch());
               }),
@@ -54,10 +55,10 @@ class _HomeState extends State<Home> {
                 child: ListView(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20),
+                      margin: EdgeInsets.only(top: 20, bottom: 5, right: 10),
                       child: Text(
                         'المعاملات',
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30, color: tdBlue),
                       ),
                       alignment: Alignment.topRight,
                     ),
