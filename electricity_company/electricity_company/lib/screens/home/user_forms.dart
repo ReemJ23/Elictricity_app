@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/models/form2.dart';
+import 'package:electricity_company/models/form1.dart';
 import 'package:electricity_company/models/form3.dart';
 import 'package:electricity_company/models/form4.dart';
+import 'package:electricity_company/models/form5.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/form1.dart';
 
 class UserForms extends StatefulWidget {
   const UserForms({super.key});
@@ -21,20 +21,20 @@ class _UserFormsState extends State<UserForms> {
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
 
-    late DocumentReference _documentReference =
+    late DocumentReference documentReference =
         FirebaseFirestore.instance.collection('users').doc(ap.uid);
-    late CollectionReference _referenceTransactions =
-        _documentReference.collection('transactions');
+    late CollectionReference referenceTransactions =
+        documentReference.collection('transactions');
 
-    late Stream<QuerySnapshot> _streamTransactions =
-        _referenceTransactions.snapshots();
+    late Stream<QuerySnapshot> streamTransactions =
+        referenceTransactions.snapshots();
 
     return Scaffold(
         backgroundColor: tdGrey,
         appBar: AppBar(
           backgroundColor: tdBlue,
           elevation: 0.0,
-          title: Text("شركة الكهرباء الأردنية"),
+          title: const Text("شركة الكهرباء الأردنية"),
           centerTitle: true,
           leading: Image.asset("images/logo.png", width: 40),
           leadingWidth: 100,
@@ -47,7 +47,7 @@ class _UserFormsState extends State<UserForms> {
             ),
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: _streamTransactions,
+                    stream: streamTransactions,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) {
                         return Center(
@@ -62,10 +62,6 @@ class _UserFormsState extends State<UserForms> {
                                   'id': e.id,
                                   'أسم المعاملة': e['أسم المعاملة'],
                                   'التاريخ': e['التاريخ'],
-                                  'صورة عن الهوية': e['صورة عن الهوية'],
-                                  'فاتورة سابقة': e['فاتورة سابقة'],
-                                  'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك':
-                                      e['شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك'],
                                 })
                             .toList();
                         return ListView.builder(
@@ -77,11 +73,7 @@ class _UserFormsState extends State<UserForms> {
                               var y = dt.year;
                               var m = dt.month;
                               var d = dt.day;
-                              String dateString = d.toString() +
-                                  '/' +
-                                  m.toString() +
-                                  '/' +
-                                  y.toString();
+                              String dateString = '$d/$m/$y';
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListTile(
@@ -95,25 +87,71 @@ class _UserFormsState extends State<UserForms> {
                                     ),
                                     leading: Text(dateString),
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => UserTrans1(
-                                            img1: thisItem['صورة عن الهوية']
-                                                .toString(),
-                                            img2: thisItem['فاتورة سابقة']
-                                                .toString(),
-                                            img3: thisItem[
-                                                    'شهادة تفويض مصدقة في حال عدم قدوم الشخص او المالك']
-                                                .toString(),
+                                      if (thisItem['أسم المعاملة'] ==
+                                          'فصل/ وصل تيار 3 فاز') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserTrans1(
+                                              id: thisItem['id'].toString(),
+                                              uid: ap.uid,
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      }
+                                      if (thisItem['أسم المعاملة'] ==
+                                          'فصل/ وصل تيار 1 فاز') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserTrans2(
+                                              id: thisItem['id'].toString(),
+                                              uid: ap.uid,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      if (thisItem['أسم المعاملة'] ==
+                                          'طلب فحص عداد 1 فاز / 3 فاز') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserTrans3(
+                                              id: thisItem['id'].toString(),
+                                              uid: ap.uid,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      if (thisItem['أسم المعاملة'] ==
+                                          'طلب كتاب لهجة معينة عن حالة العداد') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserTrans4(
+                                              id: thisItem['id'].toString(),
+                                              uid: ap.uid,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      if (thisItem['أسم المعاملة'] ==
+                                          'تغيري تعرفة عداد 1 فاز / 3 فاز') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserTrans5(
+                                              id: thisItem['id'].toString(),
+                                              uid: ap.uid,
+                                            ),
+                                          ),
+                                        );
+                                      }
                                     }),
                               );
                             });
                       }
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }))
           ],
         ));

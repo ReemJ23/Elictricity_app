@@ -54,35 +54,35 @@ class _Form3State extends State<Form3> {
   String image1Ur4 = '';
 
   GlobalKey<FormState> key = GlobalKey();
-  CollectionReference _reference =
+  final CollectionReference _reference =
       FirebaseFirestore.instance.collection('transactions');
 
   @override
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
-    late DocumentReference _documentReference =
+    late DocumentReference documentReference =
         FirebaseFirestore.instance.collection('users').doc(ap.uid);
-    late CollectionReference _referenceTransactions =
-        _documentReference.collection('transactions');
-    late Stream<QuerySnapshot> _streamTransactions =
-        _referenceTransactions.snapshots();
+    late CollectionReference referenceTransactions =
+        documentReference.collection('transactions');
+    late Stream<QuerySnapshot> streamTransactions =
+        referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
           backgroundColor: tdBlue,
           elevation: 0.0,
-          title: Text("طلب فحص عداد 1 فاز / 3 فاز"),
+          title: const Text("طلب فحص عداد 1 فاز / 3 فاز"),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(CupertinoIcons.arrow_left),
+            icon: const Icon(CupertinoIcons.arrow_left),
             onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => Wrapper(),
+                builder: (context) => const Wrapper(),
               ),
             ),
           )),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -102,7 +102,7 @@ class _Form3State extends State<Form3> {
                 InkWell(
                   onTap: () => selectImage1(),
                   child: image1 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -118,7 +118,7 @@ class _Form3State extends State<Form3> {
                 InkWell(
                   onTap: () => selectImage2(),
                   child: image2 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -134,7 +134,7 @@ class _Form3State extends State<Form3> {
                 InkWell(
                   onTap: () => selectImage3(),
                   child: image3 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -150,7 +150,7 @@ class _Form3State extends State<Form3> {
                 InkWell(
                   onTap: () => selectImage4(),
                   child: image4 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -226,7 +226,7 @@ class _Form3State extends State<Form3> {
                           };
                           //add new item
                           _reference.add(form3);
-                          Map<String, String> user_trans = {
+                          Map<String, String> userTrans = {
                             'أسم المعاملة': 'طلب فحص عداد 1 فاز / 3 فاز',
                             'التاريخ': DateTime.now()
                                 .millisecondsSinceEpoch
@@ -237,7 +237,7 @@ class _Form3State extends State<Form3> {
                                 image1Ur3,
                             'تسديد الرسوم المطلوبة والذمم': image1Ur4,
                           };
-                          _referenceTransactions.add(user_trans);
+                          referenceTransactions.add(userTrans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");
@@ -257,7 +257,7 @@ class _Form3State extends State<Form3> {
     return Text(
       label,
       textAlign: TextAlign.right,
-      style: TextStyle(
+      style: const TextStyle(
         color: tdBlue,
         fontSize: 20,
         fontWeight: FontWeight.bold,

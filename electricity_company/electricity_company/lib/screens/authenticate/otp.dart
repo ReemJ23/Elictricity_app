@@ -27,7 +27,7 @@ class _OtpState extends State<Otp> {
       appBar: AppBar(
         backgroundColor: tdBlue,
         elevation: 0.0,
-        title: Text("شركة الكهرباء الأردنية"),
+        title: const Text("شركة الكهرباء الأردنية"),
         centerTitle: true,
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
@@ -52,7 +52,7 @@ class _OtpState extends State<Otp> {
                           child: const Icon(Icons.arrow_back),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       const Text(
@@ -66,7 +66,7 @@ class _OtpState extends State<Otp> {
                         "تم ارسال رمز الى هاتفك للتحقق من رقم الهاتف",
                         style: TextStyle(fontSize: 18),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Pinput(

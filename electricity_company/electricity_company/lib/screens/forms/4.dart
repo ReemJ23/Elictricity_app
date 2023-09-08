@@ -56,34 +56,34 @@ class _Form4State extends State<Form4> {
   String image1Ur4 = '';
 
   GlobalKey<FormState> key = GlobalKey();
-  CollectionReference _reference =
+  final CollectionReference _reference =
       FirebaseFirestore.instance.collection('transactions');
   @override
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
-    late DocumentReference _documentReference =
+    late DocumentReference documentReference =
         FirebaseFirestore.instance.collection('users').doc(ap.uid);
-    late CollectionReference _referenceTransactions =
-        _documentReference.collection('transactions');
-    late Stream<QuerySnapshot> _streamTransactions =
-        _referenceTransactions.snapshots();
+    late CollectionReference referenceTransactions =
+        documentReference.collection('transactions');
+    late Stream<QuerySnapshot> streamTransactions =
+        referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
           backgroundColor: tdBlue,
           elevation: 0.0,
-          title: Text(" طلب كتاب لهجة معينة عن حالة العداد"),
+          title: const Text("طلب كتاب لهجة معينة عن حالة العداد"),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(CupertinoIcons.arrow_left),
+            icon: const Icon(CupertinoIcons.arrow_left),
             onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => Wrapper(),
+                builder: (context) => const Wrapper(),
               ),
             ),
           )),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -103,7 +103,7 @@ class _Form4State extends State<Form4> {
                 InkWell(
                   onTap: () => selectImage1(),
                   child: image1 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -145,7 +145,7 @@ class _Form4State extends State<Form4> {
                 InkWell(
                   onTap: () => selectImage2(),
                   child: image2 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -161,7 +161,7 @@ class _Form4State extends State<Form4> {
                 InkWell(
                   onTap: () => selectImage4(),
                   child: image4 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -178,7 +178,7 @@ class _Form4State extends State<Form4> {
                 InkWell(
                   onTap: () => selectImage3(),
                   child: image3 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -191,7 +191,7 @@ class _Form4State extends State<Form4> {
 
                 const SizedBox(height: 10),
                 const SizedBox(height: 30),
-                Text(
+                const Text(
                   "بعد تسليم الوثائق المطلوبة يتم عملية كشف فني على العداد",
                   style: TextStyle(
                     fontSize: 20,
@@ -266,7 +266,7 @@ class _Form4State extends State<Form4> {
                           };
                           //add new item
                           _reference.add(form4);
-                          Map<String, String> user_trans = {
+                          Map<String, String> userTrans = {
                             'أسم المعاملة':
                                 'طلب كتاب لهجة معينة عن حالة العداد',
                             'صورة عن هوية المشترك او المفوض عنه': image1Url,
@@ -279,7 +279,7 @@ class _Form4State extends State<Form4> {
                                 .millisecondsSinceEpoch
                                 .toString(),
                           };
-                          _referenceTransactions.add(user_trans);
+                          referenceTransactions.add(userTrans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");
@@ -299,7 +299,7 @@ class _Form4State extends State<Form4> {
     return Text(
       label,
       textAlign: TextAlign.right,
-      style: TextStyle(
+      style: const TextStyle(
         color: tdBlue,
         fontSize: 20,
         fontWeight: FontWeight.bold,

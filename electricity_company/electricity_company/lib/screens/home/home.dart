@@ -5,15 +5,9 @@ import 'package:electricity_company/screens/forms/2.dart';
 import 'package:electricity_company/screens/forms/3.dart';
 import 'package:electricity_company/screens/forms/4.dart';
 import 'package:electricity_company/screens/forms/5.dart';
-import 'package:electricity_company/screens/home/profile.dart';
-import 'package:electricity_company/screens/home/user_forms.dart';
 import 'package:electricity_company/widgets/transaction.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:electricity_company/screens/wrapper.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -31,7 +25,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: tdBlue,
         elevation: 0.0,
-        title: Text("شركة الكهرباء الأردنية"),
+        title: const Text("شركة الكهرباء الأردنية"),
         centerTitle: true,
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
@@ -46,7 +40,7 @@ class _HomeState extends State<Home> {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -55,33 +49,33 @@ class _HomeState extends State<Home> {
                 child: ListView(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 5, right: 10),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 20, bottom: 5, right: 10),
+                      alignment: Alignment.topRight,
+                      child: const Text(
                         'المعاملات',
                         style: TextStyle(fontSize: 30, color: tdBlue),
                       ),
-                      alignment: Alignment.topRight,
                     ),
-                    Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
-                    Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
-                    Transaction(
+                    const Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
+                    const Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
+                    const Transaction(
                         title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
-                    Transaction(
+                    const Transaction(
                         title: "طلب كتاب لهجة معينة عن حالة العداد",
                         page: Form4()),
-                    Transaction(
+                    const Transaction(
                         title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
-                    Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
-                    Transaction(
+                    const Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
+                    const Transaction(
                         title: " تغير إشتراك مشغول عداد 1 فاز منزلي",
                         page: Form1()),
-                    Transaction(
+                    const Transaction(
                         title: "  تغير إشتراك مشغول عداد 1 فاز تجاري",
                         page: Form1()),
-                    Transaction(
+                    const Transaction(
                         title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )",
                         page: Form1()),
-                    Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
+                    const Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
                     const SizedBox(
                       height: 20,
                     )
@@ -98,17 +92,17 @@ class _HomeState extends State<Home> {
 
 class CustomeSearch extends SearchDelegate {
   List<Transaction> allData = [
-    Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
-    Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
-    Transaction(title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
-    Transaction(title: "طلب كتاب لهجة معينة عن حالة العداد", page: Form4()),
-    Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
-    Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
-    Transaction(title: " تغير إشتراك مشغول عداد 1 فاز منزلي", page: Form1()),
-    Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
-    Transaction(
+    const Transaction(title: "فصل/ وصل تيار 3 فاز", page: Form1()),
+    const Transaction(title: " فصل/ وصل تيار ا فاز", page: Form2()),
+    const Transaction(title: "طلب فحص عداد ا فاز / 3 فاز", page: Form3()),
+    const Transaction(title: "طلب كتاب لهجة معينة عن حالة العداد", page: Form4()),
+    const Transaction(title: " تغير تعرفة عداد 1 فاز / 3 فاز", page: Form5()),
+    const Transaction(title: " إنهاء عقد 1 فاز", page: Form1()),
+    const Transaction(title: " تغير إشتراك مشغول عداد 1 فاز منزلي", page: Form1()),
+    const Transaction(title: "  تغير إشتراك مشغول عداد 1 فاز تجاري", page: Form1()),
+    const Transaction(
         title: " طلب رفع عداد بسبب الهدم ( 1 فاز / 3 فاز )", page: Form1()),
-    Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
+    const Transaction(title: " إنهاء عقد 3 فاز", page: Form1()),
   ];
   @override
   List<Widget> buildActions(BuildContext context) {

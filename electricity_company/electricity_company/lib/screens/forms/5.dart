@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/screens/wrapper.dart';
 import 'package:electricity_company/utils/utils.dart';
@@ -7,8 +6,10 @@ import 'package:electricity_company/widgets/custome_button.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:electricity_company/provider/auth_provider.dart';
 import 'dart:io';
 
+import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Form5 extends StatefulWidget {
@@ -25,7 +26,7 @@ class _Form5State extends State<Form5> {
   XFile? image2;
   XFile? image3;
 
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   String textLabel = ''; // Add this variable to hold the text field label
   //for selecting image
   void selectImage1() async {
@@ -48,27 +49,34 @@ class _Form5State extends State<Form5> {
   String image1Ur3 = '';
 
   GlobalKey<FormState> key = GlobalKey();
-  CollectionReference _reference =
+  final CollectionReference _reference =
       FirebaseFirestore.instance.collection('transactions');
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    late DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(ap.uid);
+    late CollectionReference referenceTransactions =
+        documentReference.collection('transactions');
+    late Stream<QuerySnapshot> streamTransactions =
+        referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
           backgroundColor: tdBlue,
           elevation: 0.0,
-          title: Text("  تغيري تعرفة عداد 1 فاز / 3 فاز"),
+          title: const Text("تغيري تعرفة عداد 1 فاز / 3 فاز"),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(CupertinoIcons.arrow_left),
+            icon: const Icon(CupertinoIcons.arrow_left),
             onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => Wrapper(),
+                builder: (context) => const Wrapper(),
               ),
             ),
           )),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -88,7 +96,7 @@ class _Form5State extends State<Form5> {
                 InkWell(
                   onTap: () => selectImage1(),
                   child: image1 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -132,7 +140,7 @@ class _Form5State extends State<Form5> {
                 InkWell(
                   onTap: () => selectImage2(),
                   child: image2 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -148,7 +156,7 @@ class _Form5State extends State<Form5> {
                 InkWell(
                   onTap: () => selectImage3(),
                   child: image3 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -160,7 +168,7 @@ class _Form5State extends State<Form5> {
                 ),
                 const SizedBox(height: 10),
                 const SizedBox(height: 30),
-                Text(
+                const Text(
                   "بعد تسليم الوثائق المطلوبة يتم عملية كشف فني على العداد وتحويله الى دائرة الفحص أو التفتيش",
                   style: TextStyle(
                     fontSize: 20,
@@ -226,6 +234,19 @@ class _Form5State extends State<Form5> {
                           };
                           //add new item
                           _reference.add(form5);
+                          Map<String, String> userTrans = {
+                            'أسم المعاملة': 'تغيري تعرفة عداد 1 فاز / 3 فاز',
+                            'شهادة سجل تجاري( شهادة الصناعة والتجارة)':
+                                image1Url,
+                            'رخصة مهن سارية المفعول مطابقة لاسم المشترك ومطابقة للنشاط':
+                                image1Ur2,
+                            'رقم العداد او فاتورة سابقة': textFieldValue,
+                            'صورة عن هوية المشترك': image1Ur3,
+                            'التاريخ': DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                          };
+                          referenceTransactions.add(userTrans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");
@@ -245,7 +266,7 @@ class _Form5State extends State<Form5> {
     return Text(
       label,
       textAlign: TextAlign.right,
-      style: TextStyle(
+      style: const TextStyle(
         color: tdBlue,
         fontSize: 20,
         fontWeight: FontWeight.bold,

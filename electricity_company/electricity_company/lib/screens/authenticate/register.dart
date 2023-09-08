@@ -21,7 +21,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         backgroundColor: tdBlue,
         elevation: 0.0,
-        title: Text("شركة الكهرباء الأردنية"),
+        title: const Text("شركة الكهرباء الأردنية"),
         centerTitle: true,
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
                 const Text(
@@ -44,7 +44,7 @@ class _RegisterState extends State<Register> {
                   "أدخل رقم الهاتف",
                   style: TextStyle(fontSize: 25),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -61,7 +61,7 @@ class _RegisterState extends State<Register> {
                         borderSide: const BorderSide(color: tdBlue)),
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 SizedBox(
                   width: double.infinity,
                   height: 60,

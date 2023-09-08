@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/models/user.dart';
@@ -80,10 +79,8 @@ class AuthProvider extends ChangeNotifier {
       PhoneAuthCredential creds = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: userOtp);
       User? user = (await _firebaseAuth.signInWithCredential(creds)).user!;
-      if (user != null) {
-        _uid = user.uid;
-        onSuccess();
-      }
+      _uid = user.uid;
+      onSuccess();
       _isLoading = false;
       notifyListeners();
     } on FirebaseAuthException catch (e) {

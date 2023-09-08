@@ -1,7 +1,6 @@
 import 'package:electricity_company/constants/colors.dart';
 import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:electricity_company/screens/authenticate/register.dart';
-import 'package:electricity_company/screens/home/home.dart';
 import 'package:electricity_company/screens/wrapper.dart';
 import 'package:electricity_company/widgets/custome_button.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class _WelcomeState extends State<Welcome> {
       appBar: AppBar(
         backgroundColor: tdBlue,
         elevation: 0.0,
-        title: Text("شركة الكهرباء الأردنية"),
+        title: const Text("شركة الكهرباء الأردنية"),
         centerTitle: true,
         leading: Image.asset("images/logo.png", width: 40),
         leadingWidth: 100,
@@ -33,7 +32,7 @@ class _WelcomeState extends State<Welcome> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 35),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
                 const Text(
@@ -45,7 +44,7 @@ class _WelcomeState extends State<Welcome> {
                   "تطبيق معاملات شركة الكهرباء الأردنية يرحب بكم",
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
                 SizedBox(
@@ -58,7 +57,7 @@ class _WelcomeState extends State<Welcome> {
                                 () => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Wrapper(),
+                                    builder: (context) => const Wrapper(),
                                   ),
                                 ),
                               );

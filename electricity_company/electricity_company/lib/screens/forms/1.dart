@@ -46,34 +46,34 @@ class _Form1State extends State<Form1> {
   String image1Ur2 = '';
   String image1Ur3 = '';
   GlobalKey<FormState> key = GlobalKey();
-  CollectionReference _reference =
+  final CollectionReference _reference =
       FirebaseFirestore.instance.collection('transactions');
   @override
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
-    late DocumentReference _documentReference =
+    late DocumentReference documentReference =
         FirebaseFirestore.instance.collection('users').doc(ap.uid);
-    late CollectionReference _referenceTransactions =
-        _documentReference.collection('transactions');
-    late Stream<QuerySnapshot> _streamTransactions =
-        _referenceTransactions.snapshots();
+    late CollectionReference referenceTransactions =
+        documentReference.collection('transactions');
+    late Stream<QuerySnapshot> streamTransactions =
+        referenceTransactions.snapshots();
     return Scaffold(
       backgroundColor: tdGrey,
       appBar: AppBar(
           backgroundColor: tdBlue,
           elevation: 0.0,
-          title: Text("فصل/ وصل تيار 3 فاز"),
+          title: const Text("فصل/ وصل تيار 3 فاز"),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(CupertinoIcons.arrow_left),
+            icon: const Icon(CupertinoIcons.arrow_left),
             onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => Wrapper(),
+                builder: (context) => const Wrapper(),
               ),
             ),
           )),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -93,7 +93,7 @@ class _Form1State extends State<Form1> {
                 InkWell(
                   onTap: () => selectImage1(),
                   child: image1 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -109,7 +109,7 @@ class _Form1State extends State<Form1> {
                 InkWell(
                   onTap: () => selectImage2(),
                   child: image2 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -125,7 +125,7 @@ class _Form1State extends State<Form1> {
                 InkWell(
                   onTap: () => selectImage3(),
                   child: image3 == null
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 50,
                           child: Icon(Icons.upload, size: 40),
@@ -137,7 +137,7 @@ class _Form1State extends State<Form1> {
                 ),
                 const SizedBox(height: 10),
                 const SizedBox(height: 30),
-                Text(
+                const Text(
                   "سيتم ارسال الطلب لدائرة الفحص والتفتيش وبعد التأكد من سلامته يتم الموافقة على فصل المشترك إذا كان لعداد سليم او ايصاله",
                   style: TextStyle(
                     fontSize: 20,
@@ -201,7 +201,7 @@ class _Form1State extends State<Form1> {
                           //add new item
                           _reference.add(form1);
                           //add transaction to user transactions
-                          Map<String, String> user_trans = {
+                          Map<String, String> userTrans = {
                             'أسم المعاملة': 'فصل/ وصل تيار 3 فاز',
                             'صورة عن الهوية': image1Url,
                             'فاتورة سابقة': image1Ur2,
@@ -211,7 +211,7 @@ class _Form1State extends State<Form1> {
                                 .millisecondsSinceEpoch
                                 .toString(),
                           };
-                          _referenceTransactions.add(user_trans);
+                          referenceTransactions.add(userTrans);
                           Navigator.pop(context);
                         } else {
                           showSnackBar(context, "الرجاء تعبئة جميع الاوراق");
@@ -231,7 +231,7 @@ class _Form1State extends State<Form1> {
     return Text(
       label,
       textAlign: TextAlign.right,
-      style: TextStyle(
+      style: const TextStyle(
         color: tdBlue,
         fontSize: 20,
         fontWeight: FontWeight.bold,

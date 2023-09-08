@@ -1,24 +1,69 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electricity_company/constants/colors.dart';
+import 'package:electricity_company/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class UserTrans4 extends StatelessWidget {
-  final String img1;
-  final String img2;
-  final String img3;
-  final String img4;
   final String id;
-
-  UserTrans4({
+  final String uid;
+  const UserTrans4({
     super.key,
-    required this.img1,
-    required this.img2,
-    required this.img3,
-    required this.img4,
     required this.id,
+    required this.uid,
   });
-  final TextEditingController _controller =
-      TextEditingController(); // Define TextEditingController
+
+  Future<String> getImg1() async {
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    DocumentSnapshot documentSnapshot =
+        await _referenceTransactions.doc(id).get();
+    return documentSnapshot['صورة عن هوية المشترك او المفوض عنه'];
+  }
+
+  Future<String> getTxt() async {
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    DocumentSnapshot documentSnapshot =
+        await _referenceTransactions.doc(id).get();
+    return documentSnapshot['رقم العداد او فاتورة سابقة'];
+  }
+
+  Future<String> getImg2() async {
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    DocumentSnapshot documentSnapshot =
+        await _referenceTransactions.doc(id).get();
+    return documentSnapshot['تفويض من المشترك مصدق عليه من البنك'];
+  }
+
+  Future<String> getImg3() async {
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    DocumentSnapshot documentSnapshot =
+        await _referenceTransactions.doc(id).get();
+    return documentSnapshot['براءة ذمه'];
+  }
+
+  Future<String> getImg4() async {
+    late DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    late CollectionReference _referenceTransactions =
+        _documentReference.collection('transactions');
+    DocumentSnapshot documentSnapshot =
+        await _referenceTransactions.doc(id).get();
+    return documentSnapshot[
+        'كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,49 +93,115 @@ class UserTrans4 extends StatelessWidget {
                 const SizedBox(height: 30),
                 label("صورة عن هوية المشترك او المفوض عنه"),
                 InkWell(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Image.network(img1),
-                    radius: 100,
+                  child: FutureBuilder<String>(
+                    future: getImg1(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        String? img1 = snapshot.data;
+                        return CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: Image.network(img1!),
+                          radius: 100,
+                        );
+                      }
+                    },
+                  ),
+                ),
+                label("رقم العداد او فاتورة سابقة"), // Use label here
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  child: FutureBuilder<String>(
+                    future: getTxt(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        String? txt = snapshot.data;
+                        return Container(
+                          color: Colors.white,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 30,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            txt!,
+                            style: TextStyle(
+                              color: tdBlue,
+                              fontSize: 20,
+                            ),
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
                 label("تفويض من المشترك مصدق عليه من البنك"),
                 InkWell(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Image.network(img2),
-                    radius: 100,
+                  child: FutureBuilder<String>(
+                    future: getImg2(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        String? img2 = snapshot.data;
+                        return CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: Image.network(img2!),
+                          radius: 100,
+                        );
+                      }
+                    },
                   ),
                 ),
-                label("رقم العداد او فاتورة سابقة"), // Use label here
-                label(id),
-
+                label('براءة ذمه'),
+                InkWell(
+                  child: FutureBuilder<String>(
+                    future: getImg3(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        String? img3 = snapshot.data;
+                        return CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: Image.network(img3!),
+                          radius: 100,
+                        );
+                      }
+                    },
+                  ),
+                ),
                 label(
-                    "كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب"),
+                    'كتاب من الجهة الرسمية موجه لشركة الكهرباء لإعطاء المطلوب'),
                 InkWell(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Image.network(img3),
-                    radius: 100,
+                  child: FutureBuilder<String>(
+                    future: getImg4(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        String? img4 = snapshot.data;
+                        return CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: Image.network(img4!),
+                          radius: 100,
+                        );
+                      }
+                    },
                   ),
-                ),
-                label("براءة ذمه"),
-                InkWell(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Image.network(img4),
-                    radius: 100,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  "سيتم ارسال الطلب لدائرة الفحص والتفتيش وبعد التأكد من سلامته يتم الموافقة على فصل المشترك إذا كان لعداد سليم او ايصاله",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.right,
                 ),
                 const SizedBox(height: 30),
                 label("جاري النظر في المعاملة"),

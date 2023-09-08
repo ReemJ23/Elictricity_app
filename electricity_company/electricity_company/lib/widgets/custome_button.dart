@@ -18,7 +18,7 @@ class CustomeButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(fontSize: 24),
+        style: const TextStyle(fontSize: 24),
       ),
     );
   }

@@ -20,7 +20,7 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         backgroundColor: tdBlue,
         elevation: 0.0,
-        title: Text("شركة الكهرباء الأردنية"),
+        title: const Text("شركة الكهرباء الأردنية"),
         actions: [
           IconButton(
             icon: const Icon(Icons.exit_to_app),
@@ -41,7 +41,7 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             const SizedBox(height: 20),
-            Text(
+            const Text(
               "المعلومات الشخصية",
               style: TextStyle(
                   color: tdBlue, fontSize: 28, fontWeight: FontWeight.bold),

@@ -9,14 +9,14 @@ class Transaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           title,
           textAlign: TextAlign.right,
-          style: TextStyle(
+          style: const TextStyle(
             color: tdBlue,
             fontWeight: FontWeight.bold,
           ),
